@@ -9,7 +9,6 @@ def get_person_list():
     Names = []
 
     for i in person_data:
-        name = [i["lastname"] + ", " +  i["firstname"]]
+        name = i['lastname'] + " " +  i['firstname']
         Names.append(name)
     return Names
-
