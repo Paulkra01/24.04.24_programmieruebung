@@ -53,8 +53,5 @@ def callback_function():
     #st.rerun()
 
 # Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
-st.session_state.current_user = st.selectbox(
-    'Versuchsperson',
-    options = person_names, key="sbVersuchsperson", on_change = callback_function)
 
 #commit
