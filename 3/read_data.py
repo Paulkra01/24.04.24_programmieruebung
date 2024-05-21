@@ -5,7 +5,7 @@ import numpy as np
 def readCSV():
     # Create DataFrame
     # df = pd.read_csv(data, sep =";")
-    df = pd.read_csv("activities/activity.csv", sep =",")
+    df = pd.read_csv("3/activities/activity.csv", sep =",")
 
     duration = df["Duration"]
     Distance = df["Distance"]
