@@ -1,6 +1,9 @@
 from PIL import Image
 import streamlit as st
 import read_data as rd
+import matplotlib.pyplot as plt
+import EKG_Plot as ekg
+
 
 
 
@@ -38,11 +41,11 @@ current_picture_path = rd.find_person_data_by_name(st.session_state.current_user
 
 
 if 'picture_path' not in st.session_state:
-    st.session_state.picture_path = 'data/pictures/none.jpg'
+        st.session_state.picture_path = 'data/pictures/none.jpg'
 
 # Suche den Pfad zum Bild, aber nur wenn der Name bekannt ist
 if st.session_state.current_user in person_names:
-    st.session_state.picture_path = rd.find_person_data_by_name(st.session_state.current_user)["picture_path"]
+        st.session_state.picture_path = rd.find_person_data_by_name(st.session_state.current_user)["picture_path"]
 
 
 # Öffne das Bild und Zeige es an
@@ -57,4 +60,12 @@ def callback_function():
 
 # Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
 
-#commit
+with st.container():
+   st.write("This is inside the container")
+
+   # You can call any Streamlit command, including custom components:
+figure = ekg.createFigure()
+ekg.plt.show()
+st.pyplot(figure)
+# Extrafunktion
+

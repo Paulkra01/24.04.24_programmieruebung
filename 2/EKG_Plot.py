@@ -42,11 +42,11 @@ def createFigure():
 # über die Zeit
     ax1.plot(time, power_original, color="blue", label="Leistung")
     ax1.set_ylabel("Leistung")
-    ax1.set_xlabel("Zeit")
+    ax1.set_xlabel("Zeit in Sekunden")
 
 # heartrate über die zeit
     ax2.plot(time, heart_rate, color="red", label="Herzfrequenz")
-    ax2.set_ylabel("Herzfrequenz in Sekunden")
+    ax2.set_ylabel("Herzfrequenz")
 
    
    
