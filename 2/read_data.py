@@ -34,7 +34,7 @@ def find_person_data_by_name(suchstring):
     else:
         return {}
     
-# print(get_person_list())
+#print(get_person_list())
 print(find_person_data_by_name("Huber, Julian")["picture_path"])
 
 #commit

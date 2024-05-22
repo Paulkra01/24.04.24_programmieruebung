@@ -4,17 +4,20 @@ import read_data as rd
 
 
 
-col1, col2 = st.columns(2)
+col1,col2 = st.columns([0.6,0.4], gap="small")
 
 with col1:
-   st.header("# EKG APP")
+   st.header("EKG APP")
 #    st.image("https://static.streamlit.io/examples/cat.jpg")
 
 with col2:
-   st.header("## Versuchsperson auswählen")
-#    st.image("https://static.streamlit.io/examples/dog.jpg")
+    
+    st.image("https://cdn.pixabay.com/photo/2020/04/25/11/16/electrocardiogram-5090352_1280.jpg")
 
+with st.container():
+   st.write("Bitte eine Versuchsperson auswählen:")
 
+   # You can call any Streamlit command, including custom components:
 
 
 # Session State wird leer angelegt, solange er noch nicht existiert
@@ -26,7 +29,7 @@ person_names = rd.get_person_list()
 
 st.session_state.current_user = st.selectbox('Versuchsperson', options = person_names, key="sbVersuchsperson")
 
-st.write("Der Name ist: ", st.session_state.current_user)
+st.write( st.session_state.current_user)
 
 print(st.session_state.current_user)
 
