@@ -49,6 +49,7 @@ def plotPC(df):
     fig.update_layout(
         xaxis_title="Time / s",
         yaxis_title="Power / W"
+        # ,xaxis_type="log"
         )
     return fig
 
