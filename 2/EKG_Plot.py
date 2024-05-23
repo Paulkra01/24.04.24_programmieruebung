@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import plotly.express as px
 
 
 def readCSV():
@@ -35,24 +35,13 @@ def createFigure():
     heart_rate = df["HeartRate"]  
     power_original = df["PowerOriginal"]  
 
-    # Plot
-    fig, ax1 = plt.subplots()
-    ax2 = ax1.twinx()
+    fig = px.line(df, x=time, y=[power_original, heart_rate])
 
-# über die Zeit
-    ax1.plot(time, power_original, color="blue", label="Leistung")
-    ax1.set_ylabel("Leistung")
-    ax1.set_xlabel("Zeit in Sekunden")
-
-# heartrate über die zeit
-    ax2.plot(time, heart_rate, color="red", label="Herzfrequenz")
-    ax2.set_ylabel("Herzfrequenz")
-
-   
-   
-
+    fig.update_traces(line_color='blue', name='Leistung', selector=dict(name='power_original'))
+    fig.update_traces(line_color='red', name='Herzfrequenz', selector=dict(name='heart_rate'))
+    fig.update_layout(yaxis_range=[0, power_original.max()])
 # limit power
-    ax1.set_ylim([0, power_original.max()])
+
 # max heart rate 
     max_heart_rate = heart_rate.max()
     heart_rate_zones = [0.5 * max_heart_rate, 0.6 * max_heart_rate, 0.7 * max_heart_rate, 0.8 * max_heart_rate, 0.9*max_heart_rate, max_heart_rate]
@@ -63,7 +52,17 @@ def createFigure():
     for i in range(len(heart_rate_zones)-1):
         zone_time = ((heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])).sum()
         zone_times.append(zone_time)
-        ax2.fill_between(time, heart_rate_zones[i], heart_rate_zones[i+1], alpha=0.3)
+        fig.add_shape(type="rect",
+                      xref="paper",
+                      yref="y",
+                      x0=0,
+                      y0=heart_rate_zones[i],
+                      x1=1,
+                      y1=heart_rate_zones[i+1],
+                      fillcolor=color[i],
+                      opacity=0.3,
+                      layer="below")
+        
     
 # Zonen Zeit
     for i, zone_time in enumerate(zone_times):
@@ -74,5 +73,6 @@ def createFigure():
     
 
 #Plot anzeigen
-    plt.show()
+    fig.show()
 print(createFigure())
+print(dataAnalysis())

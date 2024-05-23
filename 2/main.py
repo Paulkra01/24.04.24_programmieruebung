@@ -2,8 +2,8 @@ from PIL import Image
 import streamlit as st
 import read_data as rd
 import matplotlib.pyplot as plt
+import plotly.express as px
 import EKG_Plot as ekg
-
 
 
 
@@ -60,11 +60,12 @@ def callback_function():
 
 # Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
 Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
-with st.container():
-    
-   # You can call any Streamlit command, including custom components:
-    figure = ekg.createFigure()
-    ekg.plt.show()
-    st.pyplot(figure)
-# Extrafunktion
 
+def ekg():
+    st.title("EKG-Diagramm")
+    ekg_fig = ekg.create_figure()
+    st.plotly_chart(ekg_fig, use_container_width=True)   
+   # You can call any Streamlit command, including custom components:
+
+
+# Extrafunktionen
