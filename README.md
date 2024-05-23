@@ -6,4 +6,4 @@
 
 
 
-with Paul Krawjewski and Jannis Pohl
+Paul Krawjewski and Jannis Pohl
