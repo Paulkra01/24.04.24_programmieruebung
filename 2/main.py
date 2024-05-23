@@ -1,56 +1,55 @@
 from PIL import Image
 import streamlit as st
 import read_data as rd
+from PIL import Image
+import streamlit as st
+import read_data as rd
+import create_plots as cp
 import matplotlib.pyplot as plt
 import plotly.express as px
-import create_plots as cp
 import plotly.graph_objects as go
 
-
-col1,col2 = st.columns([0.6,0.4], gap="small")
-
-with col1:
-   st.header("EKG APP")
-#    st.image("https://static.streamlit.io/examples/cat.jpg")
-
-with col2:
+# Inhalt für jeden Tab hinzufügen
+def tab1_content():
+    st.header('EKG-Verzeichnis')
+    st.write('Patientenverzeichnis')
     
-    st.image("https://cdn.pixabay.com/photo/2020/04/25/11/16/electrocardiogram-5090352_1280.jpg")
+    col1,col2 = st.columns([0.6,0.4], gap="small")
 
-with st.container():
-   st.write("Bitte eine Versuchsperson auswählen:")
+    with col1:
+        st.header("EKG-Verzeichnis")
+        
+    with col2:
+    
+        st.image("https://cdn.pixabay.com/photo/2020/04/25/11/16/electrocardiogram-5090352_1280.jpg")
 
-   # You can call any Streamlit command, including custom components:
+    with st.container():
+        st.write("Bitte eine Versuchsperson auswählen:")
 
+    if 'current_user' not in st.session_state:
+        st.session_state.current_user = 'None'
 
-# Session State wird leer angelegt, solange er noch nicht existiert
-if 'current_user' not in st.session_state:
-    st.session_state.current_user = 'None'
+    person_names = rd.get_person_list()
 
-person_names = rd.get_person_list()
+    st.session_state.current_user = st.selectbox('Versuchsperson', options = person_names, key="sbVersuchsperson")
 
+    st.write( st.session_state.current_user)
 
-st.session_state.current_user = st.selectbox('Versuchsperson', options = person_names, key="sbVersuchsperson")
+    print(st.session_state.current_user)
 
-st.write( st.session_state.current_user)
+    # Auslesen des Pfades aus dem zurückgegebenen Dictionary
+    current_picture_path = rd.find_person_data_by_name(st.session_state.current_user)["picture_path"]
 
-print(st.session_state.current_user)
-
-# Auslesen des Pfades aus dem zurückgegebenen Dictionary
-current_picture_path = rd.find_person_data_by_name(st.session_state.current_user)["picture_path"]
-
-
-if 'picture_path' not in st.session_state:
+    if 'picture_path' not in st.session_state:
         st.session_state.picture_path = 'data/pictures/none.jpg'
 
-# Suche den Pfad zum Bild, aber nur wenn der Name bekannt ist
-if st.session_state.current_user in person_names:
+    # Suche den Pfad zum Bild, aber nur wenn der Name bekannt ist
+    if st.session_state.current_user in person_names:
         st.session_state.picture_path = rd.find_person_data_by_name(st.session_state.current_user)["picture_path"]
 
-
-# Öffne das Bild und Zeige es an
-image = Image.open("../" + st.session_state.picture_path)
-st.image(image, caption=st.session_state.current_user)
+        # Öffne das Bild und Zeige es an
+        image = Image.open("../" + st.session_state.picture_path)
+        st.image(image)
 
 def callback_function():
     # Logging Message
@@ -58,12 +57,39 @@ def callback_function():
     # Manuelles wieder ausführen
     #st.rerun()
 
-# Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
-Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
+# Funktion für Tab 2
+def tab2_content():
+    st.header('CSV-Datenanalyse')
+    st.write('Analyse Leistung und Herzfrequenz über die Zeit')
 
-st.title("Power and Heart Rate Plot")
-st.write("Dies ist der Inhalt von Tab 1.")
-    
-# Diagramm erstellen
-fig = cp.createFigure()
-st.plotly_chart(fig)
+    Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
+
+    #st.title("Power and Heart Rate Plot")
+    #st.write("Dies ist der Inhalt von Tab 1.")
+
+    # Diagramm erstellen
+    fig = cp.createFigure()
+    st.plotly_chart(fig)
+
+def main():
+    st.title('Datenauswertung')
+
+    # Tab-Titel definieren
+    tab_titles = ['EKG-Verzeichnis', 'CSV-Analyse']
+
+    # Tabs erstellen
+    tabs = st.tabs(tab_titles)
+
+    # Inhalt für jeden Tab hinzufügen
+    with tabs[0]:
+        tab1_content()
+
+    with tabs[1]:
+        tab2_content()
+
+if __name__ == "__main__":
+    main()
+
+# Session State wird leer angelegt, solange er noch nicht existiert
+
+# Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
