@@ -59,13 +59,12 @@ def callback_function():
     #st.rerun()
 
 # Nutzen Sie ihre neue Liste anstelle der hard-gecodeten Lösung
-
+Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
 with st.container():
-   st.write("This is inside the container")
-
+    
    # You can call any Streamlit command, including custom components:
-figure = ekg.createFigure()
-ekg.plt.show()
-st.pyplot(figure)
+    figure = ekg.createFigure()
+    ekg.plt.show()
+    st.pyplot(figure)
 # Extrafunktion
 
