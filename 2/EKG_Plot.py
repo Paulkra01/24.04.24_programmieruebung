@@ -115,6 +115,10 @@ def createFigure():
         zone_power = power_original[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]
         average_power = zone_power.mean()
         print(f"Average power in zone {i+1}: {average_power}")
+
+    # Wieviel in welche zone
+    for i, zone_time in enumerate(zone_times):
+        print(f"Time spent in zone {i+1}: {zone_time} seconds")
  #Wieviel in welche zone
     
 

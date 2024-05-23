@@ -4,7 +4,7 @@ import read_data as rd
 import matplotlib.pyplot as plt
 import plotly.express as px
 import EKG_Plot as ekg
-
+import plotly.graph_objects as go
 
 
 col1,col2 = st.columns([0.6,0.4], gap="small")
