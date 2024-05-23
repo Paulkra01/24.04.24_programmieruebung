@@ -123,8 +123,8 @@ def createFigure():
     
 
 #Plot anzeigen
-    fig.show()
-
+    # fig.show()
+    return fig
 
 
 
