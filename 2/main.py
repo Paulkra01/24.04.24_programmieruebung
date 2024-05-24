@@ -62,7 +62,7 @@ def tab2_content():
     st.header('CSV-Datenanalyse')
     st.write('Analyse Leistung und Herzfrequenz über die Zeit')
     with st.expander("HERZFREQUENZEINGABE"):
-        Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
+        input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
 
     #st.title("Power and Heart Rate Plot")
     #st.write("Dies ist der Inhalt von Tab 1.")
@@ -86,7 +86,7 @@ def tab2_content():
 
     with st.expander("GRAFIK"):
     # Daten einlesen
-        fig = cp.createFigure()
+        fig = cp.createFigure(max_heart_rate=input_max_heart_rate)
         st.plotly_chart(fig)
 
         #fig = cp.createFigure()

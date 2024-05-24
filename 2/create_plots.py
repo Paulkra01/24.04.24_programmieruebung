@@ -34,7 +34,7 @@ def dataAnalysis_mean():
     power_original_mean = df["PowerOriginal"].mean()
     return power_original_mean
 
-def createFigure():
+def createFigure(max_heart_rate):
     df = readCSV()
     
     time = np.arange(len(df))  
@@ -94,7 +94,7 @@ def createFigure():
 # limit power
 
 # max heart rate 
-    max_heart_rate = heart_rate.max()
+    max_heart_rate_graph = heart_rate.max()
     heart_rate_zones = [0.5 * max_heart_rate, 0.6 * max_heart_rate, 0.7 * max_heart_rate, 0.8 * max_heart_rate, 0.9*max_heart_rate, max_heart_rate]
     color = ['green', 'yellow', 'orange', 'red', 'purple']
 
@@ -162,6 +162,6 @@ def zone_time():
 
 
 
-print(createFigure())
+
 print(dataAnalysis_max())
 print(dataAnalysis_mean())
