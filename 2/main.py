@@ -11,14 +11,13 @@ import plotly.graph_objects as go
 
 # Inhalt für jeden Tab hinzufügen
 def tab1_content():
-    st.header('EKG-Verzeichnis')
-    st.write('Patientenverzeichnis')
+    
     
     col1,col2 = st.columns([0.6,0.4], gap="small")
 
     with col1:
 
-        st.write("EKG-Verzeichnis")
+        st.header('EKG-Verzeichnis')
         
     with col2:
     
@@ -71,17 +70,27 @@ def tab2_content():
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.button("Leistung")
-            
-                
+            if st.button("Leistung/Herzfrequenz Durchschnitt"):
+                daten_max = cp.dataAnalysis_max()
+                st.write('maximale Leistung:',daten_max)
+                daten_mean = cp.dataAnalysis_mean()
+                st.write('durchschnittliche Leistung:',daten_mean)
         with col2:
-            st.button("Power Zone")
+            if st.button("Leistungszonen"):
+                daten_powerzonen = cp.power_zonetime()
+                st.container("Zonen 1-5",daten_powerzonen)
         with col3:
-            st.button("Heart Rate")
+            if st.button("Heart Rate"):
+                daten_timeinzones = cp.zone_time()
+                st.container("Zeit in Zonen 1-5",daten_timeinzones)
+
     with st.expander("GRAFIK"):
     # Daten einlesen
         fig = cp.createFigure()
         st.plotly_chart(fig)
+
+        #fig = cp.createFigure()
+        #st.plotly_chart(fig)
 
 def main():
     st.title('Datenauswertung')

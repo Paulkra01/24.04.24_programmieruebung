@@ -1,4 +1,5 @@
 import csv
+from matplotlib.pylab import eig
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,14 +21,18 @@ def readCSV():
     CalculatedPace = df["CalculatedPace"]
     return df
 
-def dataAnalysis():
+def dataAnalysis_max():
     df = readCSV()
-    power_original_mean = df["PowerOriginal"].mean()
+    
     power_original_max = df["PowerOriginal"].max()
     #print("Mean PowerOriginal:", power_original_mean)
     #print("Max PowerOriginal:", power_original_max)
 
-    return power_original_mean, power_original_max
+    return power_original_max
+def dataAnalysis_mean():
+    df= readCSV()
+    power_original_mean = df["PowerOriginal"].mean()
+    return power_original_mean
 
 def createFigure():
     df = readCSV()
@@ -61,16 +66,16 @@ def createFigure():
     fig = go.Figure()
 
     # Hinzufügen der PowerOriginal-Linie
-    fig.add_trace(go.Scatter(x=time, y=df['PowerOriginal'], mode='lines', name='PowerOriginal',
+    fig.add_trace(go.Scatter(x=time, y=df['PowerOriginal'], mode='lines', name='Leistung',
                             yaxis='y1'))
 
     # Hinzufügen der HeartRate-Linie
-    fig.add_trace(go.Scatter(x=time, y=df['HeartRate'], mode='lines', name='HeartRate',
+    fig.add_trace(go.Scatter(x=time, y=df['HeartRate'], mode='lines', name='Herzfrequenz',
                             yaxis='y2'))
 
     # Layout aktualisieren, um die sekundäre y-Achse zu unterstützen
     fig.update_layout(
-        title='Power and Heart Rate over Time',
+        #title='Leistung und Herzfrequenz über die Zeit',
         xaxis_title='Time',
         yaxis_title='PowerOriginal',
         yaxis2=dict(
@@ -108,26 +113,55 @@ def createFigure():
                       fillcolor=color[i],
                       opacity=0.3,
                       layer="below")
+    # Erstellen der Legende für die Zonen
+    for i, zone_time in enumerate(zone_times):
+        fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(color=color[i]), name=f'Zone {i+1}'))
+        # Layout aktualisieren, um die Legende anzuzeigen
+        fig.update_layout(showlegend=True, legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        ))
+
+    # Layout aktualisieren, um die Legende anzuzeigen
+    fig.update_layout(showlegend=True)
+    
+    return fig
         
     
 # Zonen Zeit
-
-    for i, zone_time in enumerate(zone_times):
-        zone_power = power_original[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]
-        average_power = zone_power.mean()
-        print(f"Durchschnittliche Leistung in den Zonen {i+1}: {average_power}")
+def power_zonetime():
+        cf = createFigure()
+        zone_time = cf(zone_time)
+        zone_times = cf(zone_times)
+        heart_rate = cf(heart_rate)
+        power_original = cf(power_original)
+        heart_rate_zones = cf(heart_rate_zones)
+        for i, zone_time in enumerate(zone_times):
+            zone_power = power_original[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]
+            average_power = zone_power.mean()
+            
+        return average_power
+            #return f"Durchschnittliche Leistung in den Zonen {i+1}: {average_power}"
 
     # Wieviel in welche zone
+def zone_time():
+    cf = createFigure()
+    zone_time = cf(zone_time)
+    zone_times = cf(zone_times)
     for i, zone_time in enumerate(zone_times):
-        print(f"Verbrachte Zeit in Sekunden {i+1}: {zone_time} sec")
+        return f"leistung in den Zonen:{zone_time}"
  #Wieviel in welche zone
     
 
 #Plot anzeigen
     # fig.show()
-    return fig
+    
 
 
 
 print(createFigure())
-print(dataAnalysis())
+print(dataAnalysis_max())
+print(dataAnalysis_mean())
