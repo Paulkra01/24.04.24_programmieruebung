@@ -32,6 +32,7 @@ def dataAnalysis_max():
 def dataAnalysis_mean():
     df= readCSV()
     power_original_mean = df["PowerOriginal"].mean()
+    power_original_mean = round(power_original_mean, 2)
     return power_original_mean
 
 def createFigure(max_heart_rate):
@@ -76,10 +77,10 @@ def createFigure(max_heart_rate):
     # Layout aktualisieren, um die sekundäre y-Achse zu unterstützen
     fig.update_layout(
         #title='Leistung und Herzfrequenz über die Zeit',
-        xaxis_title='Time',
-        yaxis_title='PowerOriginal',
+        xaxis_title='Zeit / s',
+        yaxis_title='Leistung',
         yaxis2=dict(
-            title='HeartRate',
+            title='Herzfrequenz',
             overlaying='y',
             side='right'
         ),
@@ -132,20 +133,41 @@ def createFigure(max_heart_rate):
         
     
 # Zonen Zeit
-def power_zonetime(heart_rate_zones, zone_times, power_original, heart_rate):
-        for i, zone_time in enumerate(zone_times):
-            zone_power = power_original[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]
-            average_power = zone_power.mean()
-            
-        return average_power
-            #return f"Durchschnittliche Leistung in den Zonen {i+1}: {average_power}"
-
+def power_zonetime():
+    df = readCSV()
+    power_original = df["PowerOriginal"]
+    heart_rate = df["HeartRate"]
+    
+    max_heart_rate = heart_rate.max()
+    heart_rate_zones = [0.5 * max_heart_rate, 0.6 * max_heart_rate, 0.7 * max_heart_rate, 0.8 * max_heart_rate, 0.9*max_heart_rate, max_heart_rate]
+    
     # Wieviel in welche zone
-def zone_time(zone_times):
     
+    zone_avg_power = []
+    for i in range(len(heart_rate_zones)-1):
+            zone_power = df[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]['PowerOriginal'].mean()
+            zone_power = round(zone_power, 2)
+            zone_avg_power.append(str(i+1) + "  =  " + str(zone_power))
+    return zone_avg_power    
+
+        
+        
+  #      zone_avg_power.append(zone_power)
+   # return zone_avg_power
+
+def zone_time():
+    df = readCSV()
+    power_original = df["PowerOriginal"]
+    heart_rate = df["HeartRate"]
     
-    for i, zone_time in enumerate(zone_times):
-        return f"leistung in den Zonen:{zone_time}"
+    max_heart_rate = heart_rate.max()
+    heart_rate_zones = [0.5 * max_heart_rate, 0.6 * max_heart_rate, 0.7 * max_heart_rate, 0.8 * max_heart_rate, 0.9*max_heart_rate, max_heart_rate]
+    avg_zone_time = []
+    for i in range(len(heart_rate_zones)-1):
+        zone_time = ((heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])).sum()
+        avg_zone_time.append(zone_time)
+    return avg_zone_time
+    
  #Wieviel in welche zone
     
 

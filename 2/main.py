@@ -72,18 +72,43 @@ def tab2_content():
         with col1:
             if st.button("Leistung/Herzfrequenz Durchschnitt"):
                 daten_max = cp.dataAnalysis_max()
-                st.write('maximale Leistung:',daten_max)
+                st.write('maximale Leistung:', str(daten_max))
                 daten_mean = cp.dataAnalysis_mean()
-                st.write('durchschnittliche Leistung:',daten_mean)
+                st.write('durchschnittliche Leistung:', str(daten_mean))
+        
         with col2:
-            if st.button("Leistungszonen"):
+            if st.button("Leistung in den Zonen"):
                 daten_powerzonen = cp.power_zonetime()
-                st.container("Zonen 1-5",daten_powerzonen)
+                st.data_editor(
+                daten_powerzonen,
+                column_config={
+                "Leistung": st.column_config.TextColumn(
+                "Leistung in den Zonen",
+                help="Streamlit **widget** commands 🎈",
+                default="st.",
+                max_chars=50,
+                validate="^st\.[a-z_]+$",
+                ),
+},
+    hide_index=True,
+)
         with col3:
-            if st.button("Heart Rate"):
+            if st.button("Zeit verbracht in den Zonen in Sekunden"):
                 daten_timeinzones = cp.zone_time()
-                st.container("Zeit in Zonen 1-5",daten_timeinzones)
-
+                st.data_editor(
+                daten_timeinzones,
+                column_config={
+                "Leistung": st.column_config.TextColumn(
+                "Leistung in den Zonen",
+                help="Streamlit **widget** commands 🎈",
+                default="st.",
+                max_chars=50,
+                validate="^st\.[a-z_]+$",
+                ),
+},
+ hide_index=True,
+ 
+            )
     with st.expander("GRAFIK"):
     # Daten einlesen
         fig = cp.createFigure(max_heart_rate=input_max_heart_rate)
