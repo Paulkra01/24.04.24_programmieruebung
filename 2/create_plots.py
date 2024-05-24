@@ -132,13 +132,7 @@ def createFigure(max_heart_rate):
         
     
 # Zonen Zeit
-def power_zonetime():
-        cf = createFigure()
-        zone_time = cf(zone_time)
-        zone_times = cf(zone_times)
-        heart_rate = cf(heart_rate)
-        power_original = cf(power_original)
-        heart_rate_zones = cf(heart_rate_zones)
+def power_zonetime(heart_rate_zones, zone_times, power_original, heart_rate):
         for i, zone_time in enumerate(zone_times):
             zone_power = power_original[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]
             average_power = zone_power.mean()
@@ -147,10 +141,9 @@ def power_zonetime():
             #return f"Durchschnittliche Leistung in den Zonen {i+1}: {average_power}"
 
     # Wieviel in welche zone
-def zone_time():
-    cf = createFigure()
-    zone_time = cf(zone_time)
-    zone_times = cf(zone_times)
+def zone_time(zone_times):
+    
+    
     for i, zone_time in enumerate(zone_times):
         return f"leistung in den Zonen:{zone_time}"
  #Wieviel in welche zone
