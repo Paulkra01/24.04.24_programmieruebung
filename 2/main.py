@@ -17,7 +17,8 @@ def tab1_content():
     col1,col2 = st.columns([0.6,0.4], gap="small")
 
     with col1:
-        st.header("EKG-Verzeichnis")
+
+        st.write("EKG-Verzeichnis")
         
     with col2:
     
@@ -61,13 +62,22 @@ def callback_function():
 def tab2_content():
     st.header('CSV-Datenanalyse')
     st.write('Analyse Leistung und Herzfrequenz über die Zeit')
-
-    Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
+    with st.expander("HERZFREQUENZEINGABE"):
+        Input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
 
     #st.title("Power and Heart Rate Plot")
     #st.write("Dies ist der Inhalt von Tab 1.")
+    with st.expander("DATENANALYSE"):
+        col1, col2, col3 = st.columns(3)
 
-    # Diagramm erstellen
+        with col1:
+            st.button("Power")
+        with col2:
+            st.button("Power Zone")
+        with col3:
+            st.button("Heart Rate")
+
+
     fig = cp.createFigure()
     st.plotly_chart(fig)
 
