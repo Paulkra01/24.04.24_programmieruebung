@@ -17,7 +17,7 @@ def tab1_content():
 
     with col1:
 
-        st.header('Patienten-Verzeichnis')
+        st.header('PatientenVerzeichnis')
         
     with col2:
     

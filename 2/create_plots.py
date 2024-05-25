@@ -113,6 +113,7 @@ def createFigure(max_heart_rate):
                       y1=heart_rate_zones[i+1],
                       fillcolor=color[i],
                       opacity=0.3,
+
                       layer="below")
     # Erstellen der Legende für die Zonen
     for i, zone_time in enumerate(zone_times):
@@ -147,7 +148,7 @@ def power_zonetime():
     for i in range(len(heart_rate_zones)-1):
             zone_power = df[(heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])]['PowerOriginal'].mean()
             zone_power = round(zone_power, 2)
-            zone_avg_power.append(str(i+1) + "  =  " + str(zone_power))
+            zone_avg_power.append(str(i+1) + "  Zone  " + str(zone_power))
     return zone_avg_power    
 
         
@@ -165,7 +166,7 @@ def zone_time():
     avg_zone_time = []
     for i in range(len(heart_rate_zones)-1):
         zone_time = ((heart_rate >= heart_rate_zones[i]) & (heart_rate < heart_rate_zones[i+1])).sum()
-        avg_zone_time.append(zone_time)
+        avg_zone_time.append(str(i+1) + " Zone " + str(zone_time) + "sec")
     return avg_zone_time
     
  #Wieviel in welche zone
