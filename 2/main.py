@@ -17,7 +17,7 @@ def tab1_content():
 
     with col1:
 
-        st.header('EKG-Verzeichnis')
+        st.header('Patienten-Verzeichnis')
         
     with col2:
     
@@ -62,7 +62,7 @@ def tab2_content():
     st.header('CSV-Datenanalyse')
     st.write('Analyse Leistung und Herzfrequenz über die Zeit')
     with st.expander("HERZFREQUENZEINGABE"):
-        input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=0, max_value=300, value=0, step=1)
+        input_max_heart_rate = st.number_input("Maximale Herzfrequenz", min_value=150, max_value=300, value=200, step=1)
 
     #st.title("Power and Heart Rate Plot")
     #st.write("Dies ist der Inhalt von Tab 1.")
