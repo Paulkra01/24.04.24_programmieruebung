@@ -1,5 +1,4 @@
 from PIL import Image
-import streamlit as st
 import read_data as rd
 from PIL import Image
 import streamlit as st
