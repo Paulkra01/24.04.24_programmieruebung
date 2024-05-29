@@ -25,7 +25,7 @@ class EKGdata:
 
 
     @staticmethod
-    def find_peaks(person_data, threshold, respacing_factor=5):
+    def find_peaks(ekg_test, threshold, respacing_factor=5,search_id="None"):
         """
         A function to find the peaks in a series
         Args:
@@ -36,14 +36,20 @@ class EKGdata:
             - peaks (list): A list of the indices of the peaks
         """
         file = open("data/person_db.json")
-        person_data = json.load(file)
+        ekg_test = json.load(file)
+        if search_id == "None":
+            return {}
 
+        for person in ekg_test:
+            for ekg_test in person["ekg_tests"]:
+                if ekg_test["id"] == search_id:
+                    return ekg_test
        
         # Respace the series
-        person_data = person_data.iloc[::respacing_factor]
+        ekg_test = ekg_test.iloc[::respacing_factor]
         
         # Filter the series
-        person_data = person_data[person_data>threshold]
+        ekg_test = ekg_test[ekg_test>threshold]
 
 
         peaks = []
@@ -51,7 +57,7 @@ class EKGdata:
         current = 0
         next = 0
 
-        for index, row in person_data.items():
+        for index, row in ekg_test.items():
             last = current
             current = next
             next = row
