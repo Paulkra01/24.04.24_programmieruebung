@@ -1,5 +1,5 @@
 import json
-import datetime as dt
+from datetime import datetime
 
 class Person:
     
@@ -51,26 +51,17 @@ class Person:
         self.lastname = person_dict["lastname"]
         self.picture_path = person_dict["picture_path"]
         self.id = person_dict["id"]
-        self.age_years = self.calc_age()
+        self.age = self.calc_age(self)
         # self.sex = sex
         
     @staticmethod
     def calc_age(self):
-        today = dt.today()
-        birth_date = dt.strptime(self.date_of_birth, "%Y-%m-%d")
-        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        age = datetime.now().year - self.date_of_birth
         return age
     
     @staticmethod
     def calc_max_heart_rate(self):
-        if self.sex == "male":
-            max_hr_bpm =  223 - 0.9 * self.age_years
-        elif self.sex == "female":
-            max_hr_bpm = 226 - 1.0 *  self.age_years
-        else:
-            # der input() öffnet ein Eingabefenster für den Nutzer und speichert die Eingabe
-            max_hr_bpm  = input("Enter maximum heart rate:")
-        return int(max_hr_bpm)
+        return(220 - self.age)
 
     @staticmethod
     def load_by_id(search_id):
@@ -92,4 +83,4 @@ if __name__ == "__main__":
     person_names = Person.get_person_list(persons)
     # print(person_names)
     # print(Person.find_person_data_by_name("Huber, Julian"))
-    # print(Person.load_by_id(1)["lastname"])
+    print(Person(Person.load_by_id(2)).age)
