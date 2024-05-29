@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 
+import person as p
+import ekgdata as ekg
 
-def load_by_id():
-    pass
-
-def find_peaks():
-    pass
