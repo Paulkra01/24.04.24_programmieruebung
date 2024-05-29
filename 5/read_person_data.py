@@ -1,13 +1,7 @@
-from PIL import Image
-from PIL import Image
 import streamlit as st
+import read_person_data
+import ekgdata
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
-
-import person as p
-import ekgdata as ekg
-
 
 #%% Zu Beginn
 
@@ -70,4 +64,3 @@ st.plotly_chart(current_egk_data.fig)
 #current_egk_data.estimate_hr()
 # Zeige die Herzrate an
 #st.write("Herzrate ist: ", int(current_egk_data.heat_rate)) 
-
