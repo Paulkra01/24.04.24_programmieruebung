@@ -10,14 +10,19 @@ import plotly as pl
 class EKGdata:
 
     @staticmethod
-    def load_by_id():
-                file = open("data/person_db.json")
-                person_data = json.load(file)
-                for person in person_data:
-                    for ekg_test in person["ekg_tests"]:
-                        if ekg_test["id"] == ekg_id:
-                            ekg = EKGdata(ekg_test)
-                        return ekg	
+    def load_by_id(search_id):
+        file = open("data/person_db.json")
+        person_data = json.load(file)
+        if search_id == "None":
+            return {}
+
+        for person in person_data:
+            for ekg_test in person["ekg_tests"]:
+                if ekg_test["id"] == search_id:
+                    return ekg_test
+            
+        return {}
+
 
     @staticmethod
     def find_peaks(person_data, threshold, respacing_factor=5):
@@ -57,11 +62,12 @@ class EKGdata:
         return peaks
     @staticmethod
     def estimate_hr():
-        
+        pass
 
     @staticmethod
     def plot_time_series():
         pass
+
 ## Konstruktor der Klasse soll die Daten einlesen
 
     def __init__(self, ekg_dict):
@@ -80,13 +86,15 @@ class EKGdata:
 
 
 if __name__ == "__main__":
-    print("This is a module with some functions to read the EKG data")
+    # print("This is a module with some functions to read the EKG data")
     file = open("data/person_db.json")
     person_data = json.load(file)
     ekg_dict = person_data[0]["ekg_tests"][0]
-    print(ekg_dict)
+    # print(ekg_dict)
     ekg = EKGdata(ekg_dict)
-    print(ekg.df.head())
+    # print(ekg.df.head())
+    print(EKGdata.load_by_id(1))
+
 
 
 
