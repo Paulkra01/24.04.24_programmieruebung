@@ -55,7 +55,13 @@ class EKGdata:
                 peaks.append(index-respacing_factor)
 
         return peaks
+    @staticmethod
+    def estimate_hr():
+        
 
+    @staticmethod
+    def plot_time_series():
+        pass
 ## Konstruktor der Klasse soll die Daten einlesen
 
     def __init__(self, ekg_dict):
@@ -102,10 +108,3 @@ def find_peaks():
 
                     return " das sind die peaks" + peaks_list
 
-@staticmethod
-def estimate_hr():
-    pass
-
-@staticmethod
-def plot_time_series():
-    pass
