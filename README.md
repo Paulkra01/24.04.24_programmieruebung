@@ -1,8 +1,9 @@
-# Anwendung des Dashboard
-## Aufgabe 3
-1. Öffnen der main.py im Ordners Nr.2
+# Anwendung der Leistungskurve
+## Aufgabe 4
+1. Öffnen der main.py im Ordner "4"
 2. Installation der benötigten Pakete (requirement.txt)
-3. Im Terminal mit Hilfe streamlit run main.py das Dasboard starten
+3. gegebenenfalls eigene csv-Datei in das System einpflegen und filepath aktualisieren
+4. main.py ausführen
 
 
 
