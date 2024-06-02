@@ -37,7 +37,8 @@ def getPowerCurve(df,periods):
 
 # print(getPowerCurve(readCSV(),[1,5,30,60]))
 
-def plotPC(df):
+
+def plotPC(df, best_powers):
     
     fig = px.area(df, x=best_powers["Time"], y=best_powers["BestPower"])
     fig.update_traces(fillcolor="rgba(185, 217, 230, 0.8)", line_color="rgba(93, 157, 181, 0.8)")
