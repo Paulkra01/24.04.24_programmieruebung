@@ -103,7 +103,7 @@ class EKGdata:
 
     def make_plot(self):
 
-        # Erstellte einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
+        # Erstellt einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
         self.fig = px.line(self.df.head(2000), x="Zeit in ms", y="Messwerte in mV")
         # return self.fig
 
@@ -116,10 +116,8 @@ if __name__ == "__main__":
     # print(ekg_dict)
     ekg = EKGdata(ekg_dict)
     # print(ekg.df.head())
-    print(EKGdata.load_by_id(1))
-    print(EKGdata.find_peaks(1))
-    print(EKGdata.estimate_hr(1,1))
-
+    # print(EKGdata.load_by_id(1))
+    # print(EKGdata.find_peaks(1))
 
 # %% Funktionen
 
