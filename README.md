@@ -33,5 +33,7 @@ Um die `main.py` Datei mit Streamlit zu starten, führen Sie die folgenden Schri
 Dadurch wird Streamlit gestartet und die Anwendung in Ihrem Webbrowser geöffnet.
 
 ## Navigation im Dashboard
+- Übersichtlicher "One Pager", es lassen sich alle Versuchspersonen über die Dropdownauswahl individuell aufrufen.
+- In den Grafiken lassen sich die verschiedenen Kurven ein - und ausblenden
 
-Paul Krajewski and Jannis Pohl
+vom Paul Krajewski and Jannis Pohl
