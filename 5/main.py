@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import json
 import read_person_data as rpd
 import ekgdata as ekg
+import person
 
 
 #%% Zu Beginn
@@ -32,20 +33,27 @@ st.write("# EKG APP")
 st.write("## Versuchsperson auswählen")
 
 # Auswahlbox, wenn Personen anzulegen sind
+# person_dict = person.load_person_data()
+# person_names = person.get_person_list(person_dict)
+
 st.session_state.aktuelle_versuchsperson = st.selectbox(
     'Versuchsperson',
     options = person_names, key="sbVersuchsperson")
 
 # Name der Versuchsperson
+selected_person = st.session_state.aktuelle_versuchsperson
+# person_details = person.person_data[selected_person]
 st.write("Der Name ist: ", st.session_state.aktuelle_versuchsperson) 
 
 # TODO: Weitere Daten wie Geburtsdatum etc. schön anzeigen
+person_birthyear = rpd.find_person_data_by_name(st.session_state.aktuelle_versuchsperson)['date_of_birth']
+st.write(f"Geburtsjahr: {person_birthyear} ")
 
 # Nachdem eine Versuchsperson ausgewählt wurde, die auch in der Datenbank ist
 # Finde den Pfad zur Bilddatei
 if st.session_state.aktuelle_versuchsperson in person_names:
     st.session_state.picture_path = rpd.find_person_data_by_name(st.session_state.aktuelle_versuchsperson)["picture_path"]
-    # st.write("Der Pfad ist: ", st.session_state.picture_path) 
+    # st.write("Der Pfad ist: ", st.session_state.picture_path)
 
 #%% Bild anzeigen
 
@@ -61,9 +69,9 @@ current_egk_data = ekg.EKGdata(rpd.find_person_data_by_name(st.session_state.akt
 #%% EKG-Daten als Matplotlib Plot anzeigen
 # Nachdem die EKG, Daten geladen wurden
 # Erstelle den Plot als Attribut des Objektes
-current_egk_data.make_plot()
+fig = current_egk_data.make_plot()
 # Zeige den Plot an
-st.plotly_chart(current_egk_data.fig)
+st.plotly_chart(fig, use_container_width=True)
 
 # %% Herzrate bestimmen
 # Schätze die Herzrate 
