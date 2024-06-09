@@ -11,44 +11,6 @@ import plotly.subplots as subplots
 
 class EKGdata:
 
-## Konstruktor der Klasse soll die Daten einlesen
-
-    def __init__(self, ekg_dict):
-        self.id = ekg_dict["id"]
-        self.date = ekg_dict["date"]
-        self.result_link = ekg_dict["result_link"]
-        self.df = pd.read_csv(self.result_link, sep='\t', header=None, names=['Messwerte in mV','Zeit in ms',])
-        self.peaks = []
-
-    def make_plot(self):
-        df_peaks_heartrate = EKGdata.estimate_hr(self.df)
-        fig = subplots.make_subplots(rows=2, cols=1, shared_xaxes=True,
-                    subplot_titles=('EKG Signal', 'Heart Rate'))
-
-        # Plot EKG Signal
-        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["Messwerte in mV"], mode='lines', name='Messwerte in mV'),
-                    row=1, col=1)
-        # Plot Peaks
-        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["Peaks"], mode='markers', name='Peaks', marker=dict(color='red')),
-                    row=1, col=1)
-
-        # Plot Heart Rate (nur an den Positionen der Peaks)
-        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["HeartRate"], mode='markers', name='Heart Rate', marker=dict(color='blue')),
-                    row=2, col=1)
-
-        # Verbinde die Herzfrequenzwerte nur an den Peaks
-        peak_indices = df_peaks_heartrate.dropna(subset=["HeartRate"]).index
-        fig.add_trace(go.Scatter(x=peak_indices, y=df_peaks_heartrate.loc[peak_indices, "HeartRate"], mode='lines', name='Heart Rate (Line)', line=dict(color='green')),
-                    row=2, col=1)
-
-        # Update Layout
-        fig.update_layout(height=600, width=800, title_text="EKG Signal and Heart Rate")
-        fig.update_xaxes(title_text="Time", row=2, col=1)
-        fig.update_yaxes(title_text="Messwerte in mV", row=1, col=1)
-        fig.update_yaxes(title_text="Heart Rate (BPM)", row=2, col=1)
-        return fig
-
-
     @staticmethod
     def load_by_id(search_id, ekg_test=1):
         file = open("data/person_db.json")
@@ -127,6 +89,42 @@ class EKGdata:
     def plot_time_series(self, df):
         fig = go.Figure()
         fig.add_trace(go.Scatter(x = df["Time in ms"], y = df["Messwerte in mV"], name="Messwerte in mV"))
+        return fig
+
+## Konstruktor der Klasse soll die Daten einlesen
+    def __init__(self, ekg_dict):
+        self.id = ekg_dict["id"]
+        self.date = ekg_dict["date"]
+        self.result_link = ekg_dict["result_link"]
+        self.df = pd.read_csv(self.result_link, sep='\t', header=None, names=['Messwerte in mV','Zeit in ms',])
+        self.peaks = []
+
+    def make_plot(self):
+        df_peaks_heartrate = EKGdata.estimate_hr(self.df)
+        fig = subplots.make_subplots(rows=2, cols=1, shared_xaxes=True,
+                    subplot_titles=('EKG Signal', 'Heart Rate'))
+
+        # Plot EKG Signal
+        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["Messwerte in mV"], mode='lines', name='Messwerte in mV'),
+                    row=1, col=1)
+        # Plot Peaks
+        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["Peaks"], mode='markers', name='Peaks', marker=dict(color='red')),
+                    row=1, col=1)
+
+        # Plot Heart Rate (nur an den Positionen der Peaks)
+        fig.add_trace(go.Scatter(x=df_peaks_heartrate.index, y=df_peaks_heartrate["HeartRate"], mode='markers', name='Heart Rate', marker=dict(color='blue')),
+                    row=2, col=1)
+
+        # Verbinde die Herzfrequenzwerte nur an den Peaks
+        peak_indices = df_peaks_heartrate.dropna(subset=["HeartRate"]).index
+        fig.add_trace(go.Scatter(x=peak_indices, y=df_peaks_heartrate.loc[peak_indices, "HeartRate"], mode='lines', name='Heart Rate (Line)', line=dict(color='green')),
+                    row=2, col=1)
+
+        # Update Layout
+        fig.update_layout(height=600, width=800, title_text="EKG Signal and Heart Rate")
+        fig.update_xaxes(title_text="Time", row=2, col=1)
+        fig.update_yaxes(title_text="Messwerte in mV", row=1, col=1)
+        fig.update_yaxes(title_text="Heart Rate (BPM)", row=2, col=1)
         return fig
 
 
